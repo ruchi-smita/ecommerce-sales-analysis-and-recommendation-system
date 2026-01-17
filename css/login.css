@@ -1,0 +1,83 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+/* Page background */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #a9c9ff 0%, #fbc2eb 100%);
+}
+
+/* Login container */
+h2,form,p{
+    width: 350px;
+}
+
+/* Card effect */
+form {
+    background: transparent;
+   border-radius: 8px;
+}
+
+/* Title */
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 500;
+    color: #2c2c2c;
+    letter-spacing: 1px;
+}
+
+/* Error message */
+p {
+    text-align: center;
+    color: rgb(243, 138, 138);
+    margin-bottom: 15px;
+}
+
+/* Labels */
+label {
+    font-size: 14px;
+    color: #444;
+}
+
+/* Inputs (underline style) */
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #444;
+    background: transparent;
+    padding: 8px 5px;
+    font-size: 15px;
+    outline: none;
+    margin-bottom: 25px;
+}
+
+input::placeholder {
+    color: #777;
+}
+
+/* Login button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #0b2c4d;
+    color: #fff;
+    border: none;
+    font-size: 15px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #123f6b;
+}
