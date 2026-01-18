@@ -8,7 +8,7 @@ requireLogin();
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="/ecommerce_sales_analysis/css/style.css">
+    <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/style.css">
 
 </head>
 <body>

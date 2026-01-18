@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once "../../config/database.php";
 
 $message = "";
@@ -41,15 +43,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html>
 <head>
     <title>User Registration</title>
-    <link rel="stylesheet" href="/ecommerce_sales_analysis/css/register.css">
+    <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/register.css">
 </head>
 <body>
 
 
 
-<?php if ($message): ?>
-    <p><?php echo $message; ?></p>
-<?php endif; ?>
+
 
 <form method="POST">
     <h2>Registration Form</h2>
@@ -67,6 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </p>
 
     <button type="submit">Register</button>
+
+    <?php if ($message): ?>
+    <p><?php echo $message; ?></p>
+    <?php endif; ?>
     
 </form>
 

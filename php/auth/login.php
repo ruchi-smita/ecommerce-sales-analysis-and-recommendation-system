@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html>
 <head>
     <title>User Login</title>
-    <link rel="stylesheet" href="/ecommerce_sales_analysis/css/login.css">
+    <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/login.css">
 </head>
 <body>
 
