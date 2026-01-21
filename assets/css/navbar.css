@@ -1,0 +1,70 @@
+.navbar {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: #111;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Center links */
+.nav-center a {
+  margin: 0 1.2rem;
+  text-decoration: none;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.nav-center a:hover {
+  color: #000;
+}
+
+/* Right icons */
+.nav-right a {
+  margin-left: 1rem;
+  text-decoration: none;
+  font-size: 1rem;
+  color: #555;
+}
+
+.nav-right a:hover {
+  color: #000;
+}
+/* Sticky base */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* When scrolling */
+.navbar.scrolled {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-center {
+    display: none; /* keep it clean for now */
+  }
+}

@@ -1,0 +1,188 @@
+/* ===== GLOBAL RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+body {
+    background: #f6f7fb;
+    color: #1f1f1f;
+}
+
+/* ===== CONTAINER SYSTEM ===== */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: white;
+    padding: 90px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.hero h1 span {
+    color: #facc15;
+}
+
+.hero p {
+    margin: 15px auto 25px;
+    max-width: 700px;
+    font-size: 1.05rem;
+    opacity: 0.85;
+}
+
+.btn-primary {
+    display: inline-block;
+    background: #facc15;
+    color: #111827;
+    padding: 12px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(250, 204, 21, 0.3);
+}
+
+/* ===== SECTION STYLING ===== */
+.section {
+    padding: 70px 0;
+}
+
+.section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+/* ===== TRENDING PRODUCTS GRID ===== */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+/* PRODUCT CARD (VERY IMPORTANT) */
+.product-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.product-card h3 {
+    margin: 10px 0;
+    font-size: 1.05rem;
+}
+
+.product-card strong {
+    color: #2563eb;
+    font-size: 1.1rem;
+}
+
+/* NO DATA TEXT */
+.no-data {
+    text-align: center;
+    width: 100%;
+    color: gray;
+}
+
+/* ===== FIXED PREMIUM CATEGORIES ===== */
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Make box equal to image and image-based */
+.category-box {
+    position: relative;
+    width: 100%;
+    height: 260px;            /* controls box height */
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+    transition: 0.3s ease;
+}
+
+/* Make image fill the box */
+.category-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hidden text overlay */
+.category-box .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;              /* hidden initially */
+    transition: 0.3s ease;
+}
+
+/* Centered text */
+.category-box .overlay span {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+/* Hover effect */
+.category-box:hover {
+    transform: translateY(-5px);
+}
+
+.category-box:hover .overlay {
+    opacity: 1;              /* show text in middle */
+}
+
+
+
+/* ===== RESPONSIVE DESIGN (IMPORTANT) ===== */
+@media (max-width: 900px) {
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+}

@@ -59,7 +59,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../../assets/css/products.css">
 </head>
 <body>
-
 <h2>All Products</h2>
 
 
