@@ -59,7 +59,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
     <title>Search Products</title>
-    <link rel="stylesheet" href="../assets/css/products.css">
+    <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/search.css">
 </head>
 <body>
 
@@ -92,7 +92,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p><?php echo htmlspecialchars($row['category_name']); ?> | <?php echo htmlspecialchars($row['gender_name']); ?></p>
                 <strong>₹<?php echo htmlspecialchars($row['price']); ?></strong>
 
-                <form method="POST" action="cart/add_to_cart.php">
+                <form method="POST" action="/ecommerce_sales_analysis/php/cart/add_to_cart.php">
                     <input type="hidden" name="product_id" value="<?php echo (int)$row['product_id']; ?>">
                     <button type="submit">Add to Cart</button>
                 </form>

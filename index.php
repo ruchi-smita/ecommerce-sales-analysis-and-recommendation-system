@@ -21,7 +21,7 @@ $trendingProducts = json_decode($response, true);
 <!-- HERO / WELCOME SECTION -->
 <header class="hero">
     <div class="container">
-        <h1>Welcome to <span>VINTA</span></h1>
+        <h1>Welcome to <span>VANTA</span></h1>
         <p>
             We analyze real sales data to recommend what’s actually trending —  
             not just what the store wants to push.
@@ -41,15 +41,29 @@ $trendingProducts = json_decode($response, true);
 
         <?php if (!empty($trendingProducts)) : ?>
 
-            <?php foreach ($trendingProducts as $p) : ?>
-                <div class="product-card">
-                    <img 
-                        src="/ecommerce_sales_analysis/<?php echo htmlspecialchars($p['image_url']); ?>" 
-                        alt="<?php echo htmlspecialchars($p['name']); ?>"
+            <?php foreach ($trendingProducts as $p): ?>
+            <div class="product-card">
+
+                <img 
+                src="/ecommerce_sales_analysis/<?php echo htmlspecialchars($p['image_url']); ?>" 
+                alt="<?php echo htmlspecialchars($p['name']); ?>"
+                >
+
+                <h3><?php echo htmlspecialchars($p['name']); ?></h3>
+
+                <strong>₹<?php echo htmlspecialchars($p['price']); ?></strong>
+
+                <form method="POST" action="/ecommerce_sales_analysis/php/cart/add_to_cart.php">
+                    <input 
+                    type="hidden" 
+                    name="product_id" 
+                    value="<?php echo (int)$p['product_id']; ?>"
                     >
-                    <h3><?php echo htmlspecialchars($p['name']); ?></h3>
-                    <strong>₹<?php echo htmlspecialchars($p['price']); ?></strong>
-                </div>
+                    <button type="submit">Add to Cart</button>
+                </form>
+
+            </div>
+
             <?php endforeach; ?>
 
         <?php else : ?>

@@ -14,7 +14,7 @@ require_once __DIR__ . "/functions.php";
                 <div class="nav-left">
                 <a href="index.php" class="logo">
                     <span class="logo-icon">𓆩ꨄ︎𓆪</span>
-                    <span class="logo-text">VANTA</span>
+                    <span class="logo-text">𝚅𝙰𝙽𝚃𝙰</span>
                 </a>
                 </div>
 

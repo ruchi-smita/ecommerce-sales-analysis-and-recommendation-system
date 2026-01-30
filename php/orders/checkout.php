@@ -2,23 +2,25 @@
 session_start();
 require_once "../../config/database.php";
 
-//Read cart
-
 $cart = $_SESSION['cart'] ?? [];
 
 if (empty($cart)) {
     die("Cart is empty");
 }
 
-//Start transaction
+if (!isset($_POST['payment_method'])) {
+    die("Payment method not selected");
+}
+
+$paymentMethod = $_POST['payment_method'];
+$userId = $_SESSION['user_id'] ?? 1; // replace when auth exists
 
 $conn->beginTransaction();
 
 try {
     $totalAmount = 0;
 
-    //Calculate total
-    
+    // Fetch products
     $productIds = array_keys($cart);
     $placeholders = implode(',', array_fill(0, count($productIds), '?'));
 
@@ -32,18 +34,26 @@ try {
         $totalAmount += $p['price'] * $cart[$p['product_id']];
     }
 
-    //Create order
-    
+    // Decide payment status
+    $paymentStatus = ($paymentMethod === 'COD') ? 'PENDING' : 'SUCCESS';
+
+    // Create order
     $orderStmt = $conn->prepare(
-        "INSERT INTO orders (user_id, total_amount, status)
-         VALUES (1, ?, 'completed')"
+        "INSERT INTO orders 
+        (user_id, total_amount, payment_method, payment_status, order_status) 
+        VALUES (?, ?, ?, ?, 'PLACED')"
     );
-    $orderStmt->execute([$totalAmount]);
+
+    $orderStmt->execute([
+        $userId,
+        $totalAmount,
+        $paymentMethod,
+        $paymentStatus
+    ]);
 
     $orderId = $conn->lastInsertId();
 
-    //Insert order items + log purchase behavior
-    
+    // Insert order items + behavior log
     foreach ($products as $p) {
         $qty = $cart[$p['product_id']];
 
@@ -58,22 +68,62 @@ try {
             $p['price']
         ]);
 
-        $behavior = $conn->prepare(
+        $behaviorStmt = $conn->prepare(
             "INSERT INTO user_behavior (user_id, product_id, action)
-             VALUES (1, ?, 'purchase')"
+             VALUES (?, ?, 'purchase')"
         );
-        $behavior->execute([$p['product_id']]);
+        $behaviorStmt->execute([$userId, $p['product_id']]);
     }
 
-    //Commit + clear cart
-    
     $conn->commit();
     unset($_SESSION['cart']);
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Confirmed</title>
+    <!-- <link rel="stylesheet" href="../../assets/css/checkout.css"> -->
+</head>
+<body>
 
-    echo "<h2>Order placed successfully</h2>";
-    echo "<a href='../products/products.php'>Continue Shopping</a>";
+<div class="checkout-wrapper">
+    <div class="checkout-card">
+        <div class="success-icon">✓</div>
+
+        <h2>Order Placed Successfully</h2>
+
+        <p class="subtitle">
+            Payment Method:
+            <strong><?php echo htmlspecialchars($paymentMethod); ?></strong>
+        </p>
+
+        <div class="order-summary">
+            <div>
+                <span>Total Amount</span>
+                <strong>₹<?php echo number_format($totalAmount, 2); ?></strong>
+            </div>
+            <div>
+                <span>Order ID</span>
+                <strong>#<?php echo $orderId; ?></strong>
+            </div>
+            <div>
+                <span>Payment Status</span>
+                <strong><?php echo $paymentStatus; ?></strong>
+            </div>
+        </div>
+
+        <a href="../products/products.php" class="primary-btn">
+            Continue Shopping
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
+<?php
 
 } catch (Exception $e) {
     $conn->rollBack();
     die("Checkout failed: " . $e->getMessage());
 }
+?>

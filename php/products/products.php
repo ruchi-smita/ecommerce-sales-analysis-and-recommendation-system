@@ -56,7 +56,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
     <title>Products</title>
-    <link rel="stylesheet" href="../../assets/css/products.css">
+    <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/product.css">
 </head>
 <body>
 <h2>All Products</h2>
@@ -104,7 +104,12 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     
 <?php } ?>
-<p>Cart Items: <?php echo $cartCount; ?></p>
+<div class="cart-info">
+    <p>Cart Items: <?php echo $cartCount; ?></p>
+    <a href="/ecommerce_sales_analysis/php/cart/cart.php">GO to Cart</a> |
+</div>
+
+
 
 </div>
 
