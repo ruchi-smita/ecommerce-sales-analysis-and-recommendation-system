@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require_once "../../config/database.php";
 
 $message = "";
@@ -10,16 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    if (!empty($name) && !empty($email) && !empty($password)) {
+    if ($name && $email && $password) {
 
-        // check if email already exists
         $check = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
         $check->execute([$email]);
 
         if ($check->rowCount() > 0) {
             $message = "Email already registered!";
         } else {
-            // hash password
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             $stmt = $conn->prepare(
@@ -28,7 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
 
             if ($stmt->execute([$name, $email, $hashedPassword])) {
-                $message = "Registration successful!";
+                header("Location: login.php");
+                exit;
             } else {
                 $message = "Registration failed!";
             }
@@ -40,39 +38,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>User Registration</title>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
     <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/register.css">
 </head>
 <body>
 
+<div class="register-wrapper">
 
+    <!-- LEFT CONTENT -->
+    <div class="register-content">
+        <h1>OFFERS POWERED<br>BY DESIGNERS<br>AROUND THE WORLD.</h1>
 
+        <p class="subtext">
+            Discover fashion curated from global creators.
+        </p>
 
+        <p class="login-link">
+            Already have an account?
+            <a href="login.php">Login →</a>
+        </p>
+    </div>
 
-<form method="POST">
-    <h2>Registration Form</h2>
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+    <!-- RIGHT IMAGE + FORM -->
+    <div class="register-visual">
+        <div class="form-card">
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+            <h2>Create your account</h2>
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
-    <p>
-    Already have an account?
-    <a href="login.php">Login</a>
-</p>
+            <?php if ($message): ?>
+                <div class="error-message"><?php echo $message; ?></div>
+            <?php endif; ?>
 
-    <button type="submit">Register</button>
+            <form method="POST">
+                <input type="text" name="name" placeholder="Full name" required>
+                <input type="email" name="email" placeholder="Email address" required>
+                <input type="password" name="password" placeholder="Password" required>
 
-    <?php if ($message): ?>
-    <p><?php echo $message; ?></p>
-    <?php endif; ?>
-    
-</form>
+                <button type="submit">Create account</button>
+            </form>
+
+            </div>
+        </div>
+
+</div>
 
 </body>
 </html>

@@ -38,33 +38,63 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>User Login</title>
-    <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/login.css">
+    <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/logins.css">
 </head>
 <body>
 
+<div class="auth-wrapper">
 
+    <!-- LEFT: IMAGE / BRAND -->
+    <div class="auth-visual animate-left">
+        <div class="overlay"></div>
 
-<?php if ($message): ?>
-    <p><?php echo $message; ?></p>
-<?php endif; ?>
+        <div class="brand">
+            <h1>FASHIONLY</h1>
+            <p>Wear confidence. Own your style.</p>
+        </div>
+    </div>
 
-<form method="POST">
-    <h2>User Login</h2>
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+    <!-- RIGHT: OFFSET FORM -->
+    <div class="auth-form animate-right">
+        <div class="form-inner">
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
-    <p>
-    Don’t have an account?
-    <a href="register.php">Register here</a>
-</p>
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Login to your account</p>
 
-    <button type="submit">Login</button>
-</form>
+            <?php if (!empty($message)): ?>
+                <div class="error-message">
+                    <?php echo $message; ?>
+                </div>
+            <?php endif; ?>
 
-</body>
-</html>
+            <form method="POST">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+
+                <button type="submit">Login</button>
+            </form>
+
+                <p class="register-text">
+                    Don’t have an account?
+                    <a href="register.php">Create one</a>
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/ecommerce_sales_analysis/assets/js/login.js"></script>
+    </body>
+    </html>
