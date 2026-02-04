@@ -12,7 +12,7 @@
     <div class="footer-brand">
       <div class="logo">
         <span class="logo-icon">𓆩ꨄ︎𓆪</span>
-        <span class="logo-text">VANTA</span>
+        <span class="logo-text">FASHIONLY</span>
       </div>
       <p class="footer-desc">
         A data-driven e-commerce analytics platform that analyzes real sales trends
@@ -61,7 +61,7 @@
   </div>
 
   <div class="footer-bottom">
-    <p>© 2026 VANTA. All rights reserved.</p>
+    <p>© 2026 FASHIONLY. All rights reserved.</p>
     <div class="footer-legal">
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>

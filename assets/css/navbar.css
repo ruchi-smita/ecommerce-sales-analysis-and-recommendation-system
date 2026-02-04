@@ -1,70 +1,85 @@
-.navbar {
-  width: 100%;
-  background: #ffffff;
-  border-bottom: 1px solid #eaeaea;
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
 }
 
+/* NAVBAR */
+.navbar {
+    width: 100%;
+    padding: 24px 0;
+    background: transparent;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+}
+
+/* CONTAINER */
 .nav-container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* Logo */
+/* LEFT */
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  text-decoration: none;
-  color: #111;
-  font-weight: 600;
-  font-size: 1.1rem;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #2b2b2b;
 }
 
-/* Center links */
+/* CENTER */
+.nav-center {
+    display: flex;
+    gap: 36px;
+}
+
 .nav-center a {
-  margin: 0 1.2rem;
-  text-decoration: none;
-  color: #555;
-  font-size: 0.95rem;
+    text-decoration: none;
+    font-size: 14px;
+    color: #444;
+    position: relative;
 }
 
-.nav-center a:hover {
-  color: #000;
+/* subtle underline hover */
+.nav-center a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 1px;
+    background: #2b2b2b;
+    transition: width 0.25s ease;
 }
 
-/* Right icons */
-.nav-right a {
-  margin-left: 1rem;
-  text-decoration: none;
-  font-size: 1rem;
-  color: #555;
+.nav-center a:hover::after {
+    width: 100%;
 }
 
-.nav-right a:hover {
-  color: #000;
-}
-/* Sticky base */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: #fff;
-  transition: box-shadow 0.3s ease, background 0.3s ease;
+/* RIGHT */
+.nav-right {
+    display: flex;
+    gap: 20px;
 }
 
-/* When scrolling */
-.navbar.scrolled {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+.icon-link {
+    text-decoration: none;
+    font-size: 16px;
+    color: #2b2b2b;
+    opacity: 0.85;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-
-/* Responsive */
-@media (max-width: 768px) {
-  .nav-center {
-    display: none; /* keep it clean for now */
-  }
+.icon-link:hover {
+    opacity: 1;
+    transform: translateY(-1px);
 }

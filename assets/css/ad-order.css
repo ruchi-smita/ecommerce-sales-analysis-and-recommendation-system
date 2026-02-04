@@ -1,0 +1,42 @@
+/* =================================
+   ORDER STATUS BADGES
+================================= */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 999px;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+/* PENDING */
+.status-badge.pending {
+    background: #f1f3f5;
+    color: #555;
+}
+
+/* PAID */
+.status-badge.paid {
+    background: #e6f4ea;
+    color: #1e7f43;
+}
+
+/* SHIPPED */
+.status-badge.shipped {
+    background: #e8f0fe;
+    color: #1a5ad7;
+}
+
+/* DELIVERED */
+.status-badge.delivered {
+    background: #dff5ea;
+    color: #0f6d3c;
+}
+
+/* CANCELLED */
+.status-badge.cancelled {
+    background: #fdecea;
+    color: #b3261e;
+}

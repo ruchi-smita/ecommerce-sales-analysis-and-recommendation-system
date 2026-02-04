@@ -117,6 +117,7 @@ try {
         </a>
     </div>
 </div>
+<script src="/ecommerce_sales_analysis/assets/js/checkout.js"></script>
 
 </body>
 </html>

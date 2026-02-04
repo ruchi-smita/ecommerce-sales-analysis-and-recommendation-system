@@ -1,0 +1,189 @@
+/* ================================
+   RESET & BASE
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background: #f4f6f8;
+    color: #2b2b2b;
+    line-height: 1.4;
+}
+
+/* ================================
+   WRAPPER
+================================ */
+.admin-wrapper {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 40px;
+}
+
+/* ================================
+   PAGE HEADER
+================================ */
+.page-header {
+    margin-bottom: 32px;
+}
+
+.page-header h1 {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.page-header p {
+    font-size: 14px;
+    color: #6f6f6f;
+}
+
+/* ================================
+   TABLE
+================================ */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+}
+
+.admin-table thead th {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b6b6b;
+    padding: 16px;
+    border-bottom: 1px solid #e6e6e6;
+    background: #fafafa;
+}
+
+.admin-table tbody td {
+    padding: 16px;
+    font-size: 14px;
+    border-bottom: 1px solid #eeeeee;
+    vertical-align: middle;
+}
+
+.admin-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* ID column */
+.admin-table td:first-child {
+    color: #777;
+    font-size: 13px;
+}
+
+/* ================================
+   USER NAME + BADGE
+================================ */
+.badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 8px;
+    font-size: 11px;
+    background: #eef1f5;
+    color: #444;
+    border-radius: 12px;
+    vertical-align: middle;
+}
+
+/* ================================
+   INLINE FORMS
+================================ */
+.inline-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+select {
+    padding: 6px 8px;
+    font-size: 13px;
+    border: 1px solid #dcdcdc;
+    background: #fff;
+}
+
+select:focus {
+    outline: none;
+    border-color: #000;
+}
+
+/* ================================
+   BUTTONS
+================================ */
+button {
+    padding: 6px 12px;
+    font-size: 13px;
+    background: #2b2b2b;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* DANGER BUTTON */
+button.danger {
+    background: #d9534f;
+}
+
+button.danger:hover {
+    opacity: 0.85;
+}
+
+/* ================================
+   BACK LINK
+================================ */
+.back-link {
+    margin-top: 24px;
+}
+
+.back-link a {
+    font-size: 14px;
+    text-decoration: none;
+    color: #2b2b2b;
+    opacity: 0.8;
+}
+
+.back-link a:hover {
+    opacity: 1;
+}
+
+/* ================================
+   RESPONSIVE (BASIC)
+================================ */
+@media (max-width: 900px) {
+    .admin-wrapper {
+        padding: 0 20px;
+    }
+
+    .admin-table thead {
+        display: none;
+    }
+
+    .admin-table tr {
+        display: block;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .admin-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border: none;
+    }
+
+    .admin-table td::before {
+        content: attr(data-label);
+        font-weight: 500;
+        color: #666;
+    }
+}

@@ -50,10 +50,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- LEFT CONTENT -->
     <div class="register-content">
-        <h1>OFFERS POWERED<br>BY DESIGNERS<br>AROUND THE WORLD.</h1>
+        <h1>FASHIONLY<br><br>NOT ABOUT BRAND IT"S ABOUT STYLE.</h1>
 
         <p class="subtext">
-            Discover fashion curated from global creators.
+            If you like it wear it.
         </p>
 
         <p class="login-link">

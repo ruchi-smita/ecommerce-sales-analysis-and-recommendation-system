@@ -58,7 +58,9 @@ $orderCount = $orderStmt->fetchColumn();
 <br>
 
 <a href="products/products.php">🛍 Browse Products</a> |
-<a href="cart/cart.php">🛒 View Cart</a>
+<a href="cart/cart.php">🛒 View Cart</a>|
+<a href="/ecommerce_sales_analysis/php/auth/logout.php" title="logout">logout</a>
+
 
 </body>
 </html>

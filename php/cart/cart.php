@@ -36,13 +36,13 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
     <title>Your Cart</title>
-    <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/carts.css">
+    <link rel="stylesheet" href="/ecommerce_sales_analysis/assets/css/cart.css">
 </head>
 <body>
 
 <h2>Your Cart</h2>
 
-<form action="../orders/checkout.php" method="POST">
+<form action="../orders/checkout.php" method="POST" id="checkout-form">
 <div class="cart-container">
 
     <div class="cart-table">
@@ -61,18 +61,31 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $total = $product['price'] * $qty;
             $grandTotal += $total;
         ?>
-        <div class="cart-row">
-            <span class="product-name"><?php echo htmlspecialchars($product['name']); ?></span>
-            <span>₹<?php echo htmlspecialchars($product['price']); ?></span>
-            <span><?php echo $qty; ?></span>
-            <span class="row-total">₹<?php echo $total; ?></span>
+        <div class="cart-row" data-product-id="<?php echo $pid; ?>" data-price="<?php echo $product['price']; ?>">
+            <div class="product-info">
+                <img src="/ecommerce_sales_analysis/<?php echo htmlspecialchars($product['image_url']); ?>" alt="product">
+                <span><?php echo htmlspecialchars($product['name']); ?></span>
+            </div>
+
+            <span>₹<?php echo $product['price']; ?></span>
+
+            <div class="qty-control">
+                <button type="button" class="qty-btn dec">−</button>
+                <span class="qty"><?php echo $qty; ?></span>
+                <button type="button" class="qty-btn inc">+</button>
+            </div>
+
+
+            <span>₹<?php echo $total; ?></span>
+
+        <button type="button" class="remove-btn">✖</button>
         </div>
         <?php endforeach; ?>
     </div>
 
     <div class="cart-summary">
         <div class="summary-row">
-            <span>Grand Total</span>
+            <strong id="grand-total">₹<?php echo $grandTotal; ?></strong>
             <strong>₹<?php echo $grandTotal; ?></strong>
         </div>
 
@@ -91,9 +104,21 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </label>
         </div>
 
-        <button type="submit" class="primary-btn">
+        <div class="address-section">
+            <h4>Delivery Address</h4>
+
+            <input type="text" name="full_name" id="full_name" placeholder="Full Name" required>
+            <input type="text" name="phone" id="phone" placeholder="Phone Number" required>
+            <textarea name="address" id="address" placeholder="Full Address" required></textarea>
+            <input type="text" name="city" id="city" placeholder="City" required>
+            <input type="text" name="state" id="state" placeholder="State" required>
+            <input type="text" name="pincode" id="pincode" placeholder="Pincode" required>
+
+        </div>
+
+    <button type="submit" class="primary-btn">
             Place Order
-        </button>
+    </button>
 
         <a href="../products/products.php" class="secondary-link">
             Continue Shopping
@@ -106,6 +131,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </div>
 </form>
-
+<script src="/ecommerce_sales_analysis/assets/js/cart.js"></script>
+<script src="/ecommerce_sales_analysis/assets/js/checkout.js"></script>
 </body>
 </html>

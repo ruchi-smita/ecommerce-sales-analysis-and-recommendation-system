@@ -8,27 +8,19 @@ session_start();
 // }
 
 $python = '"C:\\Users\\badat\\AppData\\Local\\Programs\\Python\\Python314\\python.exe"';
-$projectRoot = 'C:\\xampp\\htdocs\\ecommerce_sales_analysis';
 
-$command = 'cd '. $projectRoot .' && '
-         . $python . ' -m python_services.analytics.sales_report';
+$command = 'cd C:\\xampp\\htdocs\\ecommerce_sales_analysis && '
+         . $python . ' -m python_services.analytics.category_sales';
 
 $output = shell_exec($command);
 
 if ($output === null) {
-    echo json_encode([]);
-    exit;}
+    die("Python execution failed");
+}
 
 $salesData = json_decode($output, true);
 
 if (json_last_error() !== JSON_ERROR_NONE) {
     die("JSON decode error: " . json_last_error_msg());
 }
-
-$output = trim($output);
-
-// IMPORTANT: echo ONLY JSON
-echo $output;
-exit;
 ?>
-

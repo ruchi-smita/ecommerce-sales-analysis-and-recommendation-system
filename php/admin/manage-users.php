@@ -8,9 +8,9 @@ require_once "../../config/database.php";
 |--------------------------------------------------------------------------
 | Uncomment later when login is implemented
 */
-// if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-//     die("Access denied");
-// }
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    die("Access denied");
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -60,61 +60,98 @@ $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
     <title>Manage Users</title>
-    <link rel="stylesheet" href="../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../assets/css/manage-user.css">
 </head>
 <body>
 
-<h2>👤 Manage Users</h2>
+<div class="admin-wrapper">
 
-<table border="1" cellpadding="10" cellspacing="0">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Created</th>
-        <th>Actions</th>
-    </tr>
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>Manage Users</h1>
+        <p>View, update roles, and manage registered users.</p>
+    </div>
 
-    <?php foreach ($users as $user) { ?>
-        <tr>
-            <td><?php echo $user['user_id']; ?></td>
-            <td><?php echo htmlspecialchars($user['name']); ?></td>
-            <td><?php echo htmlspecialchars($user['email']); ?></td>
-            <td>
-                <form method="POST" style="display:inline;">
-                    <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                    <select name="role">
-                        <option value="customer" <?php if ($user['role'] === 'customer') echo 'selected'; ?>>
-                            Customer
-                        </option>
-                        <option value="admin" <?php if ($user['role'] === 'admin') echo 'selected'; ?>>
-                            Admin
-                        </option>
-                    </select>
-                    <button type="submit" name="change_role">Update</button>
-                </form>
-            </td>
-            <td><?php echo $user['created_at']; ?></td>
-            <td>
-                <?php if ($user['user_id'] != 1) { ?>
-                    <form method="POST" onsubmit="return confirm('Delete this user?');">
-                        <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                        <button type="submit" name="delete_user">Delete</button>
-                    </form>
-                <?php } else { ?>
-                    Super Admin
-                <?php } ?>
-            </td>
-        </tr>
-    <?php } ?>
-</table>
+    <!-- USERS TABLE -->
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
 
-<br>
-<a href="dashboard.php">⬅ Back to Admin Dashboard</a>
+        <tbody>
+        <?php foreach ($users as $user): ?>
+            <tr>
+
+                <td>#<?php echo $user['user_id']; ?></td>
+
+                <td>
+                    <strong><?php echo htmlspecialchars($user['name']); ?></strong>
+                    <?php if ($user['user_id'] == 1): ?>
+                        <span class="badge">Super Admin</span>
+                    <?php endif; ?>
+                </td>
+
+                <td><?php echo htmlspecialchars($user['email']); ?></td>
+
+                <td>
+                    <?php if ($user['user_id'] != 1): ?>
+                        <form method="POST" class="inline-form">
+                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                            <select name="role">
+                                <option value="customer" <?= $user['role']==='customer'?'selected':''; ?>>
+                                    Customer
+                                </option>
+                                <option value="admin" <?= $user['role']==='admin'?'selected':''; ?>>
+                                    Admin
+                                </option>
+                            </select>
+                            <button type="submit" name="change_role">
+                                Update
+                            </button>
+                        </form>
+                    <?php else: ?>
+                        <em>Admin</em>
+                    <?php endif; ?>
+                </td>
+
+                <td>
+                    <?php echo date("d M Y", strtotime($user['created_at'])); ?>
+                </td>
+
+                <td>
+                    <?php if ($user['user_id'] != 1): ?>
+                        <form method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                            <button type="submit" name="delete_user" class="danger">
+                                Delete
+                            </button>
+                        </form>
+                    <?php else: ?>
+                        —
+                    <?php endif; ?>
+                </td>
+
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <div class="back-link">
+        <a href="dashboards.php">← Back to Dashboard</a>
+    </div>
+
+</div>
 
 </body>
 </html>

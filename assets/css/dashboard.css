@@ -1,0 +1,383 @@
+/* =================================
+   RESET & BASE
+================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background: #f7f8fa;
+    color: #2b2b2b;
+}
+
+/* =================================
+   LAYOUT
+================================= */
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =================================
+   SIDEBAR (KEEPING WHAT YOU LIKED)
+================================= */
+.sidebar {
+    width: 260px;
+    background: #ffffff;
+    border-right: 1px solid #e6e8eb;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand {
+    margin-bottom: 32px;
+}
+
+.sidebar-brand h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.sidebar-brand span {
+    font-size: 12px;
+    color: #8a8a8a;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nav-section {
+    margin-top: 18px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9aa0a6;
+}
+
+.sidebar-nav a {
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: #2b2b2b;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a:hover {
+    background: #f2f4f7;
+}
+
+.sidebar-nav a.active {
+    background: #2b2b2b;
+    color: #ffffff;
+}
+
+.sidebar-nav a.logout {
+    margin-top: auto;
+    color: #b00000;
+}
+
+.sidebar-nav a.logout:hover {
+    background: #ffecec;
+}
+
+/* =================================
+   MAIN CONTENT
+================================= */
+.main-content {
+    flex: 1;
+    padding: 48px 56px;
+}
+
+/* =================================
+   DASHBOARD HEADER
+================================= */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+}
+
+.dashboard-header h1 {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.dashboard-header p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #7a7a7a;
+}
+
+.admin-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.admin-actions input[type="search"] {
+    border: none;
+    border-bottom: 1px solid #cfd3d8;
+    background: transparent;
+    padding: 6px 4px;
+    font-size: 14px;
+    width: 200px;
+}
+
+.admin-actions input[type="search"]:focus {
+    outline: none;
+    border-color: #2b2b2b;
+}
+
+.admin-name {
+    font-size: 13px;
+    color: #555;
+}
+
+/* =================================
+   KPI SECTION (EDITORIAL STYLE)
+================================= */
+.kpi-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 64px;
+}
+
+.kpi-card {
+    background: transparent;
+}
+
+.kpi-card span {
+    font-size: 13px;
+    color: #8a8a8a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.kpi-card strong {
+    display: block;
+    margin-top: 10px;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+/* =================================
+   PANELS (CHARTS & SECTIONS)
+================================= */
+.panel {
+    margin-bottom: 56px;
+}
+
+.panel h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.chart-container {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 14px;
+}
+
+.chart-container.small {
+    max-width: 380px;
+}
+
+.split {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+/* =================================
+   TABLES (PREMIUM ADMIN)
+================================= */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.data-table thead th {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+    color: #777;
+    padding: 14px 18px;
+    background: #fafafa;
+}
+
+.data-table tbody td {
+    padding: 14px 18px;
+    font-size: 14px;
+    border-top: 1px solid #eeeeee;
+}
+
+.data-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* =================================
+   ORDER STATUS BADGES
+================================= */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 999px;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+/* PENDING */
+.status-badge.pending {
+    background: #f1f3f5;
+    color: #555;
+}
+
+/* PAID */
+.status-badge.paid {
+    background: #e6f4ea;
+    color: #1e7f43;
+}
+
+/* SHIPPED */
+.status-badge.shipped {
+    background: #e8f0fe;
+    color: #1a5ad7;
+}
+
+/* DELIVERED */
+.status-badge.delivered {
+    background: #dff5ea;
+    color: #0f6d3c;
+}
+
+/* CANCELLED */
+.status-badge.cancelled {
+    background: #fdecea;
+    color: #b3261e;
+}
+
+/* ================================
+   SETTINGS PAGE EXTRAS
+================================ */
+
+/* Panels already exist – just refine spacing */
+.panel {
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 14px;
+    margin-bottom: 48px;
+}
+
+/* Panel titles */
+.panel h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #2b2b2b;
+}
+
+/* Settings tables (reuse data-table but soften) */
+.panel .data-table td {
+    padding: 14px 0;
+    font-size: 14px;
+}
+
+.panel .data-table td:first-child {
+    color: #6f6f6f;
+    width: 220px;
+}
+
+/* ================================
+   SETTINGS ACTIONS
+================================ */
+.settings-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Logout / danger link */
+.danger-link {
+    display: inline-block;
+    width: fit-content;
+    padding: 10px 16px;
+    background: #fdecea;
+    color: #b3261e;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.danger-link:hover {
+    background: #f9d7d5;
+}
+
+/* Small helper text */
+.hint {
+    font-size: 13px;
+    color: #8a8a8a;
+}
+
+/* ================================
+   RESPONSIVE SETTINGS
+================================ */
+@media (max-width: 900px) {
+
+    .panel {
+        padding: 22px;
+    }
+
+    .panel .data-table td:first-child {
+        width: auto;
+    }
+}
+
+
+/* =================================
+   RESPONSIVE
+================================= */
+@media (max-width: 900px) {
+
+    .main-content {
+        padding: 32px 24px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .kpi-section {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .split {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        display: none; /* later you can add mobile toggle */
+    }
+}
