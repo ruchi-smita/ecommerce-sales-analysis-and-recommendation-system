@@ -1,73 +1,109 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const cartContainer = document.querySelector(".cart-container");
-    const grandTotalEl = document.getElementById("grand-total");
+    const cartRows = document.querySelectorAll(".cart-row");
 
-    if (!cartContainer) return;
+    cartRows.forEach(row => {
+        const incBtn = row.querySelector(".inc");
+        const decBtn = row.querySelector(".dec");
+        const removeBtn = row.querySelector(".remove-btn");
 
-    cartContainer.addEventListener("click", (e) => {
-        const row = e.target.closest(".cart-row");
-        if (!row) return;
+        incBtn.addEventListener("click", () => changeQty(row, 1));
+        decBtn.addEventListener("click", () => changeQty(row, -1));
+        removeBtn.addEventListener("click", () => removeItem(row));
+    });
+});
 
-        const productId = row.dataset.productId;
+/* ==============================
+   CHANGE QUANTITY
+================================ */
+function changeQty(row, delta) {
+    const qtyEl = row.querySelector(".qty");
+    let qty = parseInt(qtyEl.innerText);
+
+    if (qty + delta < 1) return; // prevent 0 or negative
+
+    qty += delta;
+    qtyEl.innerText = qty;
+
+    updateItemTotal(row, qty);
+    updateGrandTotal();
+
+    syncQtyWithServer(row.dataset.productId, qty);
+}
+
+/* ==============================
+   UPDATE ITEM TOTAL
+================================ */
+function updateItemTotal(row, qty) {
+    const price = parseFloat(row.dataset.price);
+    const totalEl = row.querySelector(".item-total");
+
+    const total = price * qty;
+    totalEl.innerText = "₹" + total.toFixed(2);
+}
+
+/* ==============================
+   UPDATE GRAND TOTAL
+================================ */
+function updateGrandTotal() {
+    let grandTotal = 0;
+
+    document.querySelectorAll(".cart-row").forEach(row => {
+        const qty = parseInt(row.querySelector(".qty").innerText);
         const price = parseFloat(row.dataset.price);
-        const qtyEl = row.querySelector(".qty");
-
-        // INCREMENT
-        if (e.target.classList.contains("inc")) {
-            updateQty(productId, "inc", qtyEl, price, row);
-        }
-
-        // DECREMENT
-        if (e.target.classList.contains("dec")) {
-            updateQty(productId, "dec", qtyEl, price, row);
-        }
-
-        // REMOVE
-        if (e.target.classList.contains("remove-btn")) {
-            removeItem(productId, row);
-        }
+        grandTotal += qty * price;
     });
 
-    function updateQty(id, action, qtyEl, price, row) {
-        fetch(`update_qty.php?id=${id}&action=${action}`)
-            .then(() => {
-                let qty = parseInt(qtyEl.textContent);
+    document.getElementById("grand-total").innerText =
+        "₹" + grandTotal.toFixed(2);
+}
 
-                if (action === "inc") qty++;
-                if (action === "dec" && qty > 1) qty--;
+/* ==============================
+   SYNC WITH SERVER (AJAX)
+================================ */
+function syncQtyWithServer(productId, qty) {
+    fetch("update_cart.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: qty
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (!data.success) {
+            console.error("Cart sync failed");
+        }
+    })
+    .catch(err => console.error("AJAX error:", err));
+}
 
-                qtyEl.textContent = qty;
+/* ==============================
+   REMOVE ITEM
+================================ */
+function removeItem(row) {
+    const productId = row.dataset.productId;
 
-                const itemTotalEl = row.querySelector("span:last-of-type");
-                itemTotalEl.textContent = `₹${(qty * price).toFixed(2)}`;
+    fetch("remove_from_cart.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ product_id: productId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            row.remove();
+            updateGrandTotal();
 
-                recalculateGrandTotal();
-            })
-            .catch(err => console.error("Qty update failed", err));
-    }
-
-    function removeItem(id, row) {
-        fetch(`remove_from_cart.php?id=${id}`)
-            .then(() => {
-                row.remove();
-                recalculateGrandTotal();
-
-                if (document.querySelectorAll(".cart-row").length === 0) {
-                    location.reload(); // cart empty → reload
-                }
-            })
-            .catch(err => console.error("Remove failed", err));
-    }
-
-    function recalculateGrandTotal() {
-        let total = 0;
-
-        document.querySelectorAll(".cart-row").forEach(row => {
-            const price = parseFloat(row.dataset.price);
-            const qty = parseInt(row.querySelector(".qty").textContent);
-            total += price * qty;
-        });
-
-        grandTotalEl.textContent = `₹${total.toFixed(2)}`;
-    }
-});
+            // If cart becomes empty
+            if (document.querySelectorAll(".cart-row").length === 0) {
+                location.reload();
+            }
+        }
+    })
+    .catch(err => console.error("Remove failed:", err));
+}

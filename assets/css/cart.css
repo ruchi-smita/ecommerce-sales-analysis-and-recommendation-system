@@ -1,207 +1,216 @@
-/* RESET */
+/* ==============================
+   RESET + BASE
+================================ */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
-    background: #f9f9f9;
-    color: #222;
-    padding: 40px 60px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+    background: #ffffff;
+    color: #111827;
+    padding: 32px;
 }
 
-/* PAGE TITLE */
 h2 {
-    font-size: 22px;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
-    font-weight: 500;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 28px;
 }
 
-/* MAIN CONTAINER */
+/* ==============================
+   LAYOUT
+================================ */
 .cart-container {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
-}
-
-/* LEFT: CART TABLE */
-.cart-table {
-    flex: 2;
-    background: #fff;
-    padding: 30px;
-    border: 1px solid #e5e5e5;
-}
-
-/* HEADER */
-.cart-header {
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #777;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
+    max-width: 1200px;
+    margin: auto;
 }
 
-/* CART ROW */
+/* ==============================
+   CART TABLE
+================================ */
+.cart-table {
+    padding-right: 24px;
+}
+
+.cart-header,
 .cart-row {
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr auto;
+    grid-template-columns: 2.5fr 1fr 1fr 1fr auto;
     align-items: center;
-    padding: 20px 0;
-    border-bottom: 1px solid #eee;
+    column-gap: 16px;
 }
 
-/* PRODUCT INFO */
+.cart-header {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6b7280;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.cart-row {
+    padding: 22px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+/* ==============================
+   PRODUCT INFO
+================================ */
 .product-info {
     display: flex;
-    gap: 15px;
+    gap: 16px;
     align-items: center;
 }
 
 .product-info img {
-    width: 70px;
-    height: auto;
-    border: 1px solid #eee;
+    width: 68px;
+    height: 84px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #f3f4f6;
 }
 
-.product-info span {
-    font-size: 14px;
-    line-height: 1.4;
+.product-name {
+    font-size: 15px;
+    font-weight: 500;
 }
 
-/* PRICE & TOTAL */
-.cart-row span {
-    font-size: 14px;
+/* ==============================
+   PRICE / TOTAL
+================================ */
+.price,
+.item-total {
+    font-size: 15px;
+    font-weight: 500;
 }
 
-/* QUANTITY */
+/* ==============================
+   QUANTITY
+================================ */
 .qty-control {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
 }
 
-.qty-control a {
-    text-decoration: none;
-    color: #000;
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #ffffff;
     font-size: 16px;
-    padding: 2px 6px;
-    border: 1px solid #ccc;
+    cursor: pointer;
 }
 
-.qty-control span {
-    min-width: 20px;
+.qty-btn:hover {
+    background: #f9fafb;
+}
+
+.qty {
+    width: 32px;
     text-align: center;
+    font-size: 14px;
 }
 
-/* REMOVE BUTTON */
+/* ==============================
+   REMOVE
+================================ */
 .remove-btn {
-    text-decoration: none;
-    font-size: 14px;
-    color: #999;
+    border: none;
+    background: none;
+    color: #9ca3af;
+    cursor: pointer;
 }
 
 .remove-btn:hover {
-    color: #000;
+    color: #111827;
 }
 
-/* RIGHT: SUMMARY */
+/* ==============================
+   SUMMARY (RIGHT PANEL)
+================================ */
 .cart-summary {
-    flex: 1;
-    background: #fff;
-    padding: 30px;
-    border: 1px solid #e5e5e5;
+    border-left: 1px solid #e5e7eb;
+    padding-left: 32px;
 }
 
-/* SUMMARY ROW */
+.cart-summary h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
 .summary-row {
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
-    margin-bottom: 20px;
+    font-size: 15px;
+    margin-bottom: 12px;
 }
 
-.summary-row strong {
-    font-size: 16px;
-}
-
-/* PAYMENT */
-.payment-section {
-    margin-bottom: 25px;
-}
-
-.payment-section h4 {
-    font-size: 14px;
-    margin-bottom: 10px;
-    font-weight: 500;
-}
-
-.payment-section label {
-    font-size: 13px;
-    display: block;
-    margin-bottom: 6px;
-}
-
-/* ADDRESS */
-.address-section {
-    margin-bottom: 25px;
-}
-
-.address-section h4 {
-    font-size: 14px;
-    margin-bottom: 10px;
-    font-weight: 500;
-}
-
-.address-section input,
-.address-section textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 13px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-}
-
-.address-section textarea {
-    resize: none;
-    height: 80px;
-}
-
-/* BUTTONS */
+/* ==============================
+   BUTTONS
+================================ */
 .primary-btn {
     width: 100%;
-    background: #000;
-    color: #fff;
-    border: none;
+    margin-top: 20px;
     padding: 14px;
+    background: #111827;
+    color: #ffffff;
+    border: none;
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
 }
 
 .primary-btn:hover {
-    opacity: 0.9;
+    background: #000000;
 }
 
 .secondary-link,
 .danger-link {
     display: block;
-    text-align: center;
+    margin-top: 14px;
     font-size: 13px;
-    margin-top: 10px;
+    text-align: center;
     text-decoration: none;
 }
 
 .secondary-link {
-    color: #555;
+    color: #374151;
 }
 
 .danger-link {
-    color: #999;
+    color: #9ca3af;
+}
+
+/* ==============================
+   RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+    .cart-container {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-summary {
+        border-left: none;
+        padding-left: 0;
+        margin-top: 32px;
+    }
+
+    .cart-header {
+        display: none;
+    }
+
+    .cart-row {
+        grid-template-columns: 1fr;
+        row-gap: 14px;
+    }
 }

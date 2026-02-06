@@ -27,7 +27,8 @@
         <a href="/ecommerce_sales_analysis/php/admin/order.php"
            class="<?= basename($_SERVER['PHP_SELF']) === 'order.php' ? 'active' : '' ?>">
             Orders
-        </a>
+        </a> 
+        <a href="/ecommerce_sales_analysis/index.php">Home</a>
         <a href="/ecommerce_sales_analysis/php/products/products.php">Products</a>
         <a href="/ecommerce_sales_analysis/php/admin/add-product.php">Add Product</a>
 

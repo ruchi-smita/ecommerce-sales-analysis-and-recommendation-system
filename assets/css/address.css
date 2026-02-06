@@ -1,0 +1,105 @@
+/* ==============================
+   BASE
+================================ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+    background: #ffffff;
+    color: #111827;
+}
+
+/* ==============================
+   WRAPPER
+================================ */
+.page-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+/* ==============================
+   HEADER
+================================ */
+.card-header h2 {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.card-header p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 32px;
+}
+
+/* ==============================
+   FORM LAYOUT
+================================ */
+.address-card {
+    max-width: 640px;
+}
+
+.address-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    color: #374151;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    resize: none;
+    min-height: 90px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* ==============================
+   BUTTON
+================================ */
+.primary-btn {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+    padding: 14px;
+    background: #111827;
+    color: #ffffff;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background: #000000;
+}
+
+/* ==============================
+   RESPONSIVE
+================================ */
+@media (max-width: 700px) {
+    .address-form {
+        grid-template-columns: 1fr;
+    }
+}
