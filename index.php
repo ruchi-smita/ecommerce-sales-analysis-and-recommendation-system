@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . "/includes/functions.php";
-requireLogin();
+// require_once __DIR__ . "/includes/functions.php";
+// requireLogin();
 
 $apiUrl = "http://localhost/ecommerce_sales_analysis/php/api/get-recommendations.php";
 $response = file_get_contents($apiUrl);

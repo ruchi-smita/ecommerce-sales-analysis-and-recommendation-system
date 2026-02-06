@@ -1,6 +1,8 @@
 <?php
 session_start();
-require_once "../../config/database.php";
+require_once "../../config/database.php"; 
+require_once "../../includes/functions.php";
+requireLogin();
 
 $userId = $_SESSION['user_id'] ?? 1; // demo fallback
 
