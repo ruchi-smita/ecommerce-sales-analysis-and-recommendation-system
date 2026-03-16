@@ -1,0 +1,152 @@
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin','customer') DEFAULT 'customer',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL UNIQUE
+);
+CREATE TABLE genders (
+    gender_id INT AUTO_INCREMENT PRIMARY KEY,
+    gender_name VARCHAR(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE products (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    category_id INT NOT NULL,
+    gender_id INT NOT NULL,
+    image_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (category_id) REFERENCES categories(category_id),
+    FOREIGN KEY (gender_id) REFERENCES genders(gender_id)
+);
+
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+
+    total_amount DECIMAL(10,2) NOT NULL,
+
+    payment_method VARCHAR(50) NOT NULL,
+    payment_status VARCHAR(30) NOT NULL,
+
+    order_status VARCHAR(30) NOT NULL,
+
+    order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    legacy_status VARCHAR(30),
+
+    -- indexes
+    INDEX idx_user_id (user_id),
+    INDEX idx_order_date (order_date)
+
+    );
+
+ALTER TABLE orders
+ADD COLUMN address_id INT AFTER user_id;
+
+
+CREATE TABLE order_items (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+CREATE TABLE user_behavior (
+    behavior_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    action ENUM('view','cart','purchase') NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+CREATE TABLE recommendations (
+    rec_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    score DECIMAL(6,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+CREATE INDEX idx_product_category ON products(category_id);
+CREATE INDEX idx_product_gender ON products(gender_id);
+
+CREATE INDEX idx_order_user ON orders(user_id);
+CREATE INDEX idx_order_date ON orders(order_date);
+
+CREATE INDEX idx_behavior_product ON user_behavior(product_id);
+CREATE INDEX idx_behavior_action ON user_behavior(action);
+CREATE INDEX idx_behavior_time ON user_behavior(timestamp);
+
+INSERT INTO categories (category_name) VALUES
+('Clothes'),
+('Footwear'),
+('Accessories');
+
+INSERT INTO genders (gender_name) VALUES
+('Men'),
+('Women'),
+('Unisex');
+
+
+SELECT * FROM categories;
+SELECT * FROM genders;
+
+
+INSERT INTO products (name, price, category_id, gender_id, image_url) VALUES
+-- Clothes (Women)
+('Women Floral Dress', 1499.00, 1, 2, 'images/products/women_dress.jpg'),
+('Women Denim Jacket', 1999.00, 1, 2, 'images/products/women_jacket.jpg'),
+
+-- Clothes (Men)
+('Men Casual Shirt', 1299.00, 1, 1, 'images/products/men_shirt.jpg'),
+('Men Slim Fit Jeans', 1799.00, 1, 1, 'images/products/men_jeans.jpg'),
+
+-- Footwear
+('Men Running Shoes', 2499.00, 2, 1, 'images/products/men_shoes.jpg'),
+('Women Heels', 1899.00, 2, 2, 'images/products/women_heels.jpg'),
+
+-- Accessories
+('Leather Wallet', 799.00, 3, 3, 'images/products/wallet.jpg'),
+('Women Handbag', 1599.00, 3, 2, 'images/products/handbag.jpg');
+
+
+SELECT p.product_id, p.name, c.category_name, g.gender_name, p.price
+FROM products p
+JOIN categories c ON p.category_id = c.category_id
+JOIN genders g ON p.gender_id = g.gender_id;
+
+
+CREATE TABLE user_addresses (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    full_name VARCHAR(100),
+    phone VARCHAR(15),
+    address_line TEXT,
+    city VARCHAR(50),
+    state VARCHAR(50),
+    pincode VARCHAR(10),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+
