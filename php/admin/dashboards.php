@@ -1,16 +1,14 @@
 <?php
 session_start();
 
-require_once "../../config/database.php";
+require_once __DIR__ . "/../../config/database.php";
+require_once __DIR__ . "/../../includes/python-runtime.php";
 
 // Optional admin check
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../auth/login.php");
     exit;
 }
-
-$python = '"C:\\Users\\badat\\AppData\\Local\\Programs\\Python\\Python314\\python.exe"';
-$projectRoot = 'C:\\xampp\\htdocs\\ecommerce_sales_analysis';
 
 /* ================= SUMMARY CARDS ================= */
 $totalSales = $conn->query("SELECT SUM(total_amount) FROM orders")->fetchColumn() ?? 0;
@@ -29,17 +27,15 @@ $stmt = $conn->query("
 $recentOrders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 /* ================= CATEGORY SALES (Python) ================= */
-$command = 'cd ' . $projectRoot . ' && '
-         . $python . ' -m python_services.analytics.category_sales';
+$command = python_module_command('python_services.analytics.category_sales');
 
-$output = trim(shell_exec($command));
+$output = $command !== null ? trim((string) shell_exec($command)) : '';
 $categorySales = json_decode($output, true) ?? [];
 
 /* ================= CUSTOMER INSIGHTS (Python) ================= */
-$command = 'cd ' . $projectRoot . ' && '
-         . $python . ' -m python_services.analytics.customer_insights';
+$command = python_module_command('python_services.analytics.customer_insights');
 
-$output = trim(shell_exec($command));
+$output = $command !== null ? trim((string) shell_exec($command)) : '';
 $topCustomers = json_decode($output, true);
 
 if (json_last_error() !== JSON_ERROR_NONE) {

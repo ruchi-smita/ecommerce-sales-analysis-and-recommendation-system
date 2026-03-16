@@ -1,6 +1,9 @@
 <?php
 session_start(); 
-require_once "../../config/database.php";
+require_once "../../config/database.php"; 
+require_once "../../includes/product-catalog.php";
+
+ensure_product_catalog_schema($conn);
 
 // Fetch categories
 $catStmt = $conn->prepare("SELECT category_id, category_name FROM categories");
@@ -12,12 +15,14 @@ $genStmt = $conn->prepare("SELECT gender_id, gender_name FROM genders");
 $genStmt->execute();
 $genders = $genStmt->fetchAll(PDO::FETCH_ASSOC);
 
-$message = "";
+$message = ""; 
+$messageType = "error";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $name        = trim($_POST['name']);
-    $price       = trim($_POST['price']);
+    $price       = trim($_POST['price']); 
+    $description = trim($_POST['description'] ?? '');
     $category_id = $_POST['category_id'];
     $gender_id   = $_POST['gender_id'];
 
@@ -59,8 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (move_uploaded_file($image['tmp_name'], $uploadPath)) {
 
                 $sql = "INSERT INTO products
-                        (name, price, category_id, gender_id, image_url, created_at)
-                        VALUES (?, ?, ?, ?, ?, NOW())";
+                        (name, price, category_id, gender_id, image_url, description, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
                 $stmt = $conn->prepare($sql);
 
@@ -69,9 +74,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $price,
                     $category_id,
                     $gender_id,
-                    $dbPath
+                    $dbPath,
+                    $description !== '' ? $description : null
                 ])) {
                     $message = "Product added successfully!";
+                    $messageType = "success";
                 } else {
                     $message = "Database error.";
                 }
@@ -102,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
     <?php if ($message): ?>
-        <div class="alert">
+        <div class="alert alert--<?= htmlspecialchars($messageType); ?>">
             <?php echo htmlspecialchars($message); ?>
         </div>
     <?php endif; ?>
@@ -124,7 +131,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <h3>Pricing</h3>
 
                 <label>Price</label>
-                <input type="text" name="price" placeholder="e.g. 1999" required>
+                <input type="text" name="price" placeholder="e.g. 1999" required> 
+            </div> 
+
+            <div class="form-section">
+                <h3>Product Details</h3>
+
+                <label>Description</label>
+                <textarea
+                    name="description"
+                    rows="6"
+                    placeholder="Write a short product description for the detail page."
+                ><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
             </div>
 
             <div class="form-section">

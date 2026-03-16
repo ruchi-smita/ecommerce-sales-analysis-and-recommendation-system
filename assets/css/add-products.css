@@ -33,8 +33,18 @@ body {
 .alert {
     margin-top: 24px;
     padding: 12px 16px;
+    font-size: 14px;
+    border-radius: 12px;
+}
+
+.alert--error {
     background: #ffe5e5;
     color: #b00000;
+}
+
+.alert--success {
+    background: #e7f6ea;
+    color: #20663c;
     font-size: 14px;
 }
 
@@ -66,7 +76,8 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
     width: 100%;
     padding: 12px 10px;
     font-size: 14px;
@@ -75,9 +86,15 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
     outline: none;
     border-color: #000;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 160px;
 }
 
 /* ROW */
@@ -132,4 +149,18 @@ select:focus {
 
 .submit-btn:hover {
     opacity: 0.9;
+}
+
+@media (max-width: 860px) {
+    .admin-wrapper {
+        padding: 0 20px;
+    }
+
+    .product-form {
+        grid-template-columns: 1fr;
+    }
+
+    .row {
+        flex-direction: column;
+    }
 }

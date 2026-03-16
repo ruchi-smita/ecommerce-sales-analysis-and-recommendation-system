@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . "/../../includes/python-runtime.php";
 
 /* ---------- ADMIN CHECK (recommended) ---------- */
 // if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -8,10 +9,11 @@ session_start();
 // }
 
 /* ---------- PYTHON EXECUTION ---------- */
-$python = '"C:\\Users\\badat\\AppData\\Local\\Programs\\Python\\Python314\\python.exe"';
+$command = python_module_command('python_services.analytics.top_products');
 
-$command = 'cd C:\\xampp\\htdocs\\ecommerce_sales_analysis && '
-         . $python . ' -m python_services.analytics.top_products';
+if ($command === null) {
+    die("Python executable not found");
+}
 
 $output = shell_exec($command);
 

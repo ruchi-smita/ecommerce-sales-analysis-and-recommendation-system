@@ -28,6 +28,8 @@ $trendingProducts = json_decode($response, true);
 <?php include "php/products/categories.php"; ?>
 
 
+<?php include "includes/assistant-widget.php"; ?>
+
 <?php include "includes/footer.php"; ?>
 
 </body>

@@ -67,10 +67,12 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
              data-price="<?php echo $product['price']; ?>">
 
             <div class="product-info">
-                <img src="/ecommerce_sales_analysis/<?php echo htmlspecialchars($product['image_url']); ?>" alt="product">
-                <span class="product-name">
+                <a href="/ecommerce_sales_analysis/php/products/product-details.php?id=<?php echo (int) $pid; ?>">
+                    <img src="/ecommerce_sales_analysis/<?php echo htmlspecialchars($product['image_url']); ?>" alt="product">
+                </a>
+                <a class="product-name" href="/ecommerce_sales_analysis/php/products/product-details.php?id=<?php echo (int) $pid; ?>">
                     <?php echo htmlspecialchars($product['name']); ?>
-                </span>
+                </a>
             </div>
 
             <span class="price">₹<?php echo $product['price']; ?></span>

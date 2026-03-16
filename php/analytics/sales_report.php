@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . "/../../includes/python-runtime.php";
 
 // optional admin check
 // if ($_SESSION['role'] !== 'admin') {
@@ -7,11 +8,12 @@ session_start();
 //     exit;
 // }
 
-$python = '"C:\\Users\\badat\\AppData\\Local\\Programs\\Python\\Python314\\python.exe"';
-$projectRoot = 'C:\\xampp\\htdocs\\ecommerce_sales_analysis';
+$command = python_module_command('python_services.analytics.sales_report');
 
-$command = 'cd '. $projectRoot .' && '
-         . $python . ' -m python_services.analytics.sales_report';
+if ($command === null) {
+    echo json_encode([]);
+    exit;
+}
 
 $output = shell_exec($command);
 

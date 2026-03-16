@@ -1,14 +1,8 @@
 import json
-import mysql.connector
 from datetime import datetime, timedelta
+from db_connect import get_connection
 
-# Database connection
-conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="ecommerce_db"
-)
+conn = get_connection()
 
 cursor = conn.cursor(dictionary=True)
 

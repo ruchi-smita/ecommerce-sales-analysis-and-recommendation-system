@@ -25,6 +25,7 @@ require_once __DIR__ . "/functions.php";
             <a href="/ecommerce_sales_analysis/index.php">Home</a>
             <a href="/ecommerce_sales_analysis/php/products/products.php?category=&gender=">Collections</a>
             <a href="/ecommerce_sales_analysis/php/products/categories.php">categories</a>
+            <a href="#style-assistant-panel" data-assistant-open>AI Assistant</a>
         </div>
 
         <!-- RIGHT: ACTIONS -->

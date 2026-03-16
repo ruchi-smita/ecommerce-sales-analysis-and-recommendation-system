@@ -14,6 +14,19 @@ if (
 }
 
 $product_id = (int) $_POST['product_id'];
+$redirectTo = "/ecommerce_sales_analysis/php/products/products.php";
+
+if (isset($_POST['redirect_to']) && is_string($_POST['redirect_to'])) {
+    $candidate = trim($_POST['redirect_to']);
+
+    if (
+        strpos($candidate, '/ecommerce_sales_analysis/') === 0 &&
+        strpos($candidate, "\n") === false &&
+        strpos($candidate, "\r") === false
+    ) {
+        $redirectTo = $candidate;
+    }
+}
 
 // Verify product exists
 
@@ -42,15 +55,15 @@ if (isset($_SESSION['cart'][$product_id])) {
 
 //Log user behavior (cart)
 
-//NOTE: user_id is hardcoded to 1 for now
+$behaviorUserId = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : 1;
 
 $behavior = $conn->prepare(
     "INSERT INTO user_behavior (user_id, product_id, action)
-     VALUES (1, ?, 'cart')"
+     VALUES (?, ?, 'cart')"
 );
-$behavior->execute([$product_id]);
+$behavior->execute([$behaviorUserId, $product_id]);
 
-// Redirect back to products page
-header("Location: /ecommerce_sales_analysis/php/products/products.php");
+// Redirect back to the caller page
+header("Location: " . $redirectTo);
 exit;
 ?>

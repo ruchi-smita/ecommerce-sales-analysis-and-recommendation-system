@@ -26,6 +26,7 @@ $orderStmt = $conn->prepare(
         o.payment_status,
         o.order_status,
         o.order_date,
+        p.product_id,
         p.name AS product_name,
         p.image_url,
         oi.quantity
@@ -55,6 +56,7 @@ foreach ($rows as $row) {
     ];
 
     $orders[$row['order_id']]['items'][] = [
+        'product_id' => $row['product_id'],
         'name'     => $row['product_name'],
         'image'    => $row['image_url'],
         'quantity' => $row['quantity'],
@@ -120,10 +122,19 @@ foreach ($rows as $row) {
                             <div class="order-items">
                                 <?php foreach ($order['items'] as $item): ?>
                                     <div class="order-item">
-                                        <img src="/ecommerce_sales_analysis/<?php echo htmlspecialchars($item['image']); ?>" alt="">
+                                        <a href="/ecommerce_sales_analysis/php/products/product-details.php?id=<?php echo (int) $item['product_id']; ?>">
+                                            <img src="/ecommerce_sales_analysis/<?php echo htmlspecialchars($item['image']); ?>" alt="">
+                                        </a>
                                         <div>
-                                            <p><?php echo htmlspecialchars($item['name']); ?></p>
+                                            <p>
+                                                <a class="order-product-link" href="/ecommerce_sales_analysis/php/products/product-details.php?id=<?php echo (int) $item['product_id']; ?>">
+                                                    <?php echo htmlspecialchars($item['name']); ?>
+                                                </a>
+                                            </p>
                                             <span>Qty: <?php echo $item['quantity']; ?></span>
+                                            <a class="review-link" href="/ecommerce_sales_analysis/php/products/product-details.php?id=<?php echo (int) $item['product_id']; ?>#reviews">
+                                                View details / review
+                                            </a>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>

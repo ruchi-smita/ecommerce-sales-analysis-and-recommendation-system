@@ -50,6 +50,7 @@ $sql .= " ORDER BY p.created_at DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$returnPath = $_SERVER['REQUEST_URI'] ?? '/ecommerce_sales_analysis/php/products/products.php';
 ?>
 
 <!DOCTYPE html>
@@ -71,6 +72,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="nav-right">
             <a href="/ecommerce_sales_analysis/index.php">Home</a>
             <a href="/ecommerce_sales_analysis/php/products/products.php">Products</a>
+            <a href="#style-assistant-panel" data-assistant-open>AI Assistant</a>
             <a href="/ecommerce_sales_analysis/php/cart/cart.php">
                 Cart (<?php echo $cartCount; ?>)
             </a>
@@ -114,23 +116,35 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php foreach ($products as $row): ?>
     <div class="product-card">
-        <img src="../../<?php echo htmlspecialchars($row['image_url']); ?>" alt="Product Image">
+        <a href="/ecommerce_sales_analysis/php/products/product-details.php?id=<?php echo (int) $row['product_id']; ?>" class="product-card__image">
+            <img src="../../<?php echo htmlspecialchars($row['image_url']); ?>" alt="Product Image">
+        </a>
 
-        <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+        <a href="/ecommerce_sales_analysis/php/products/product-details.php?id=<?php echo (int) $row['product_id']; ?>" class="product-card__title">
+            <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+        </a>
 
         <strong>₹<?php echo htmlspecialchars($row['price']); ?></strong>
         <p>
             <?php echo htmlspecialchars($row['category_name']); ?> |
             <?php echo htmlspecialchars($row['gender_name']); ?>
         </p>
-        <form method="POST" action="/ecommerce_sales_analysis/php/cart/add_to_cart.php">
-            <input type="hidden" name="product_id" value="<?php echo (int)$row['product_id']; ?>">
-            <button type="submit">Add to Cart</button>
-        </form>
+        <div class="product-card__actions">
+            <a href="/ecommerce_sales_analysis/php/products/product-details.php?id=<?php echo (int) $row['product_id']; ?>" class="product-link">
+                View Details
+            </a>
+            <form method="POST" action="/ecommerce_sales_analysis/php/cart/add_to_cart.php">
+                <input type="hidden" name="product_id" value="<?php echo (int)$row['product_id']; ?>">
+                <input type="hidden" name="redirect_to" value="<?php echo htmlspecialchars($returnPath); ?>">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
     </div>
 <?php endforeach; ?>
 
 </div>
+
+<?php include __DIR__ . "/../../includes/assistant-widget.php"; ?>
 
 </body>
 </html>
